@@ -6,6 +6,7 @@ import PIL.ImageChops
 import PIL.ImageOps
 from time import sleep
 import struct
+import sys
 
 printerMACAddress = '24:00:11:00:00:D3'
 printerWidth = 384
@@ -42,7 +43,11 @@ def trim_image(im):
 
 def create_text(text, font_name="Lucon.ttf", font_size=12):
     img = PIL.Image.new('RGB', (printerWidth, 5000), color=(255, 255, 255))
-    font = PIL.ImageFont.truetype(font_name, font_size)
+    try:
+        font = PIL.ImageFont.truetype(font_name, font_size)
+    except IOError:
+        print(f"Font '{font_name}' not found. Using default font.")
+        font = PIL.ImageFont.load_default()
     
     d = PIL.ImageDraw.Draw(img)
     lines = []
@@ -129,12 +134,24 @@ def main():
         print("Product Info:", product_info)
         sleep(0.5)
         
-        # Read Image File
-        img = PIL.Image.open("Turtle.jpg")
-        
-        # Create image from text (optional)
-        # text = "Line 1\nLine 2\nLine 3"
-        # img = create_text(text, font_size=65)
+        # Determine if data is being piped in
+        if not sys.stdin.isatty():
+            print("Reading input from stdin...")
+            input_text = sys.stdin.read()
+            if input_text.strip():
+                img = create_text(input_text, font_size=40)
+            else:
+                print("No input received from stdin.")
+                sock.close()
+                return
+        else:
+            # Read Image File
+            try:
+                img = PIL.Image.open("Turtle.jpg")
+            except IOError:
+                print("Failed to open 'Turtle.jpg'. Please provide input via stdin or ensure the image file exists.")
+                sock.close()
+                return
         
         print_image(sock, img)
         print("Image sent to printer.")
