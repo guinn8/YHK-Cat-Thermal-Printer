@@ -1,3 +1,5 @@
+# FILENAME: main.py DO NOT REMOVE COMMENT
+
 import bluetooth
 import sys
 from time import sleep

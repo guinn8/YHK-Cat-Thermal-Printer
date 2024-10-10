@@ -1,3 +1,5 @@
+# FILENAME: img_processing.py DO NOT REMOVE COMMENT
+
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
