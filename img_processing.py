@@ -7,7 +7,7 @@ import PIL.ImageChops
 import PIL.ImageOps
 import struct
 from time import sleep
-from printer import initialize_printer, send_start_print_sequence, send_end_print_sequence
+from printer import *
 
 printerWidth = 384
 
