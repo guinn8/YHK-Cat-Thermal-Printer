@@ -1,0 +1,10 @@
+Printer Functional Test Results:
+Initialize Printer: Passed
+Get Printer Status: Passed
+Data: b'HV=H1.0,SV=V1.01,VOLT=8020mv,DPI=384,\x00'
+Get Serial Number: Passed
+Data: b'sn:CCHW2400110000D3.\x00'
+Get Product Info: Passed
+Data: b'public id:0212.\x00'
+Start Print Sequence: Passed
+End Print Sequence: Passed

@@ -7,7 +7,6 @@ import PIL.ImageChops
 import PIL.ImageOps
 import struct
 from time import sleep
-from printer import initialize_printer, send_start_print_sequence, send_end_print_sequence
 
 printerWidth = 384
 
@@ -45,7 +44,7 @@ def get_wrapped_text(text: str, font: PIL.ImageFont.ImageFont, line_length: int)
             lines.append(word)
     return '\n'.join(lines)
 
-def print_image(sock, im):
+def format_image(im):
     if im.width > printerWidth:
         # Scale down proportionately
         height = int(im.height * (printerWidth / im.width))
@@ -80,12 +79,7 @@ def print_image(sock, im):
         struct.pack('<HH', width_bytes, height), 
         im.tobytes()
     ))
+
+    return buf
     
-    initialize_printer(sock)  
-    sleep(0.5)    
-    send_start_print_sequence(sock)
-    sleep(0.5)
-    sock.send(buf)
-    sleep(0.5)
-    send_end_print_sequence(sock)
-    sleep(0.5)
+

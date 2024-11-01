@@ -4,8 +4,8 @@ import bluetooth
 import sys
 import argparse
 from time import sleep
-from printer import initialize_printer, get_printer_status, get_printer_serial_number, get_printer_product_info, send_start_print_sequence, send_end_print_sequence
-from img_processing import create_text, print_image
+from printer import *
+from img_processing import create_text
 import PIL.Image
 
 def connect_printer(mac_address, port):
@@ -55,7 +55,7 @@ def main():
         print("Connected to printer.")
 
         if args.status:
-            handle_status(sock)
+            print(get_printer_data(sock))
         elif args.info:
             handle_info(sock)
         elif not sys.stdin.isatty():
